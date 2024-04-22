@@ -1,0 +1,15 @@
+version: '3'
+services:
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: 10.0.0.42
+      WORDPRESS_DB_USER: urqui
+      WORDPRESS_DB_PASSWORD: lindo
+      WORDPRESS_DB_NAME: reto3database
+    volumes:
+      - /home/ubuntu/wordpress:/var/www/html

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: reto3db
+      MYSQL_DATABASE: reto3database
+      MYSQL_USER: urqui
+      MYSQL_PASSWORD: lindo
+    volumes:
+      - data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+volumes:
+  data:
