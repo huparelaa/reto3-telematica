@@ -36,6 +36,7 @@ cargas.
 
 ## 2. información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
 Se utilizó la arquitectura presentada a continuación:
+
 ![img](/imgs/overview.png)
 
 Como podemos ver en el diagrama se puede acceder a la página web por medio de `https` debido al certificado SSL obtenido, además como se puede apreciar esta dirección de internet va al balanceador de cargas el cual se encarga de distribuir las peticiones entre una instancia de wordpress y otra, finalmente vemos que ambas instancias de wordpress apuntan a la misma base de datos y NFS Server los cuales también están separadas en sus respectivas máquinas virtuales usando docker tal y como se evidencia en la imagen.
