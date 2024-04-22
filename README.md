@@ -167,11 +167,53 @@ docker-compose up -d
 
 ### Crear instancia de NFS Server
 
+1. **Instalación de NFS Server**
 
+```bash
+sudo apt-get update
+sudo apt-get install nfs-kernel-server
+```
+
+2. **Configuración de NFS Server**
+
+```bash
+sudo mkdir -p var/nfs/worpress
+sudo chown nobody:nogroup var/nfs/worpress
+sudo chmod 777 var/nfs/worpress
+```
+
+3. **Exportación del directorio**
+
+- Añade el directorio a `/etc/exports` con las configuraciones adecuadas para los clientes:
+    ```
+    /var/nfs/wordpress <IP_clientes>(rw,sync,no_subtree_check)
+    ```
+- Aplica los cambios: `sudo exportfs -a`.
+- Reinicia el servidor NFS: `sudo systemctl restart nfs-kernel-server`.
+
+### Configuración del Cliente NFS en Instancias de WordPress
+
+1. **Instalación del Cliente NFS**:
+   - `sudo apt install nfs-common`.
+   
+2. **Montaje del Directorio NFS**:
+- Monta el directorio NFS en el punto de montaje deseado:
+    ```
+    sudo mkdir -p /var/www/html
+    sudo mount <IP_servidor_NFS>:/var/nfs/wordpress /var/www/html
+    ```
+- Añade la configuración al `/etc/fstab` para montajes automáticos:
+    ```
+    <IP_servidor_NFS>:/var/nfs/wordpress /var/www/html nfs auto,noatime,nolock,bg,nfsvers=3,intr,tcp,actimeo=1800 0 0
+    ```
+
+Esta configuración asegura que las instancias de WordPress puedan compartir de manera eficiente archivos y datos a través del servidor NFS, manteniendo la consistencia entre múltiples servidores para una aplicación escalable y de alta disponibilidad.
 
 ## Resultados o pantallazos 
 
-Video que muestra como se ejecuta el software: [![Texto alternativo](https://img.youtube.com/vi/iGte68D_GbQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=iGte68D_GbQ)
+Video que muestra como se ejecuta el software: [video](https://youtu.be/iGte68D_GbQ)
+[![Texto alternativo](https://img.youtube.com/vi/iGte68D_GbQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=iGte68D_GbQ)
+
 
 ### Referencias
 - [Wordpress with NFS](https://mohsensy.github.io/sysadmin/2020/04/01/wordpress-nfs.html)
